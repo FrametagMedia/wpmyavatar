@@ -1,12 +1,12 @@
 <?php 
 /*
 Plugin Name: WPMyAvatar
-Plugin URI: http://www.glitch-it.com.au/plugins/wp/wpmyavatar/
+Plugin URI: https://frametagmedia.com.au/
 Description: Select a user profile avatar from the WordPress media library. 
 Version: 1.1
-Author: Glitch IT
-Author URI: http://www.glich-it.com.au
-License: GNU GPLv3
+Author: Frametag Media
+Author URI: https://frametagmedia.com.au/
+License: GNU GPLv2
 */
 
 add_action('admin_print_styles-user-edit.php', 'my_avatar_admin_print_styles');
