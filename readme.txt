@@ -1,9 +1,9 @@
 === WPMyAvatar ===
-Contributors: glitchit
+Contributors: frametagmedia
 Tags: avatar, custom avatar, custom profile pic, customization, media library, personalization
 Requires at least: 4.5
 Tested up to: 4.5.3
-License: GNU GPL v3
+License: GNU GPL v2
 
 Add a custom avatar (profile picture) from the Wordpress Media Library as user profile picture instead of gravatar.
 
@@ -15,10 +15,10 @@ Shortcode to show a user avatar anywhere on your site - [my_avatar userId=\'1\' 
 * please note users must be an author or higher to upload a custom avatar/profile picture
 
 == Installation ==
-Install from WordPress plugin gallery or download the zip from http://www.glitch-it.com.au/plugins/wp/wpmyavatar and install manually via the plugin upload in WordPress.
+Install from WordPress plugin gallery or download the zip from https://frametagmedia.com.au/digital-creative/wordpress-plugins/wpmyavatar/ and install manually via the plugin upload in WordPress.
 
 == Frequently Asked Questions ==
-email info@glitch-it.com.au for more information
+email developers@frametagmedia.com.au for more information
 
 == Changelog ==
 1.1 - Fixed saving blank path even if previously selected image existed
