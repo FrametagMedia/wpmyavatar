@@ -9,11 +9,11 @@ Author URI: https://frametagmedia.com.au/
 License: GNU GPLv2
 */
 
-add_action('admin_print_styles-user-edit.php', 'my_avatar_admin_print_styles');
-add_action('admin_print_styles-profile.php', 'my_avatar_admin_print_styles');
-function my_avatar_admin_print_styles() {
+add_action('admin_print_styles-user-edit.php', 'wpma_admin_print_styles');
+add_action('admin_print_styles-profile.php', 'wpma_admin_print_styles');
+function wpma_admin_print_styles() {
 	global $hook_suffix;
-	wp_enqueue_style('my-avatar', plugins_url('/WPMyAvatar/css/my-avatar.css'), 'css');
+	wp_enqueue_style('my-avatar', plugins_url('css/my-avatar.css', __FILE__), 'css');
 }
 
 function load_wp_media_files() {
@@ -21,25 +21,25 @@ function load_wp_media_files() {
 }
 add_action( 'admin_enqueue_scripts', 'load_wp_media_files' );
 
-add_action('show_user_profile', 'my_avatar_form');
-add_action('edit_user_profile', 'my_avatar_form');
+add_action('show_user_profile', 'wpma_form');
+add_action('edit_user_profile', 'wpma_form');
 
-function my_avatar_form($profile)
+function wpma_form($profile)
 {
 	global $current_user;
 	
 	// Check if it is current user or super admin role
 	if( $profile->ID == $current_user->ID || current_user_can('edit_user', $current_user->ID) || is_super_admin($current_user->ID) ): ?>
         <table class="form-table">
-        <tr id="my_avatar_field_row">
+        <tr id="wpma_field_row">
             <th>
                 <label for="specs"><?php _e('Profile Picture', 'my-avatar'); ?></label>
             </th>
             <td>
                 <div id="my-avatar-display">
-					<div id="my-avatar-display-image"><?php echo my_avatar_get_url($profile->ID) !== false ? my_avatar_get_avatar($profile->ID) : ''; ?></div>
+					<div id="my-avatar-display-image"><?php echo wpma_get_url($profile->ID) !== false ? wpma_get_avatar($profile->ID) : ''; ?></div>
 					<button id="my-avatar-link" class="button button-secondary"><?php _e('Update Avatar','my-avatar'); ?></button> 
-					<input type="hidden" id="my_avatar_url" name="my_avatar_url" value="<?php echo my_avatar_get_url($profile->ID) !== false ? my_avatar_get_url($profile->ID) : ''; ?>" />
+					<input type="hidden" id="wpma_url" name="wpma_url" value="<?php echo wpma_get_url($profile->ID) !== false ? wpma_get_url($profile->ID) : ''; ?>" />
 				</div>
             </td>
         </tr>
@@ -69,7 +69,7 @@ function my_avatar_form($profile)
 					// Only get one image from the uploader
 					attachment = file_frame.state().get('selection').first().toJSON();
 
-					jQuery('#my_avatar_url').val( attachment.url );
+					jQuery('#wpma_url').val( attachment.url );
 					jQuery('#my-avatar-display-image').html('<img src="'+attachment.url+'" width=150 height=150 alt="New Avatar" />');
 				});
 					// Finally, open the modal
@@ -82,8 +82,8 @@ function my_avatar_form($profile)
 	endif;
 } 
 
-function my_avatar_get_avatar($ID,$size=150,$alt='User Avatar'){
-	$url = get_user_meta($ID,'my_avatar_url',true);
+function wpma_get_avatar($ID,$size=150,$alt='User Avatar'){
+	$url = get_user_meta($ID,'wpma_url',true);
 	// check we got a valid url 
 	if(!empty($url) && filter_var($url, FILTER_VALIDATE_URL)){
 		return '<img src="'.$url.'" class="avatar avatar-'.$size.' photo" width='.$size.' height='.$size.' alt="'.$alt.'" />';
@@ -91,8 +91,8 @@ function my_avatar_get_avatar($ID,$size=150,$alt='User Avatar'){
 	return false;
 }
 
-function my_avatar_get_url($ID){
-	$url = get_user_meta($ID,'my_avatar_url',true);
+function wpma_get_url($ID){
+	$url = get_user_meta($ID,'wpma_url',true);
 	// check we got a valid url 
 	if(!empty($url) && filter_var($url, FILTER_VALIDATE_URL)){
 		return $url;
@@ -100,15 +100,15 @@ function my_avatar_get_url($ID){
 	return false;
 }
 
-add_action( 'personal_options_update', 'my_avatar_profile_fields' );
-add_action( 'edit_user_profile_update', 'my_avatar_profile_fields' );
+add_action( 'personal_options_update', 'wpma_profile_fields' );
+add_action( 'edit_user_profile_update', 'wpma_profile_fields' );
 
-function my_avatar_profile_fields( $user_id ) {
+function wpma_profile_fields( $user_id ) {
 
-	if ( !current_user_can( 'edit_user', $user_id ) || empty($_POST['my_avatar_url']))
+	if ( !current_user_can( 'edit_user', $user_id ) || empty($_POST['wpma_url']))
 		return false;
 
-	update_usermeta( $user_id, 'my_avatar_url', $_POST['my_avatar_url'] );
+	update_usermeta( $user_id, 'wpma_url', $_POST['wpma_url'] );
 }
 
 
@@ -116,9 +116,9 @@ function my_avatar_profile_fields( $user_id ) {
  * WordPress Avatar Filter
  * Replaces the WordPress avatar with your custom photo using the get_avatar hook.
  */
-add_filter( 'get_avatar', 'my_avatar' , 10 , 5 );
+add_filter( 'get_avatar', 'wpma' , 10 , 5 );
 
-function my_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
+function wpma( $avatar, $id_or_email, $size, $default, $alt ) {
     $user = false;
     $id = false;
 
@@ -141,7 +141,7 @@ function my_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
 
     if ( $user && is_object( $user ) ) {
 
-        $custom_avatar = my_avatar_get_url($user->id);
+        $custom_avatar = wpma_get_url($user->id);
 
         if (isset($custom_avatar) && !empty($custom_avatar)) {
             $avatar = "<img alt='{$alt}' src='{$custom_avatar}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
@@ -152,26 +152,26 @@ function my_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
     return $avatar;
 }
 
-function my_avatar_move_around() {
+function wpma_move_around() {
     ?>
     <script type="text/javascript">
         jQuery(document).ready(function($) {
-            field = $('#my_avatar_field_row').remove();
+            field = $('#wpma_field_row').remove();
             field.insertBefore('tr.user-profile-picture');
         });
     </script>
     <?php
 }
-add_action( 'admin_head', 'my_avatar_move_around' );
+add_action( 'admin_head', 'wpma_move_around' );
 
-function my_avatar_shortcode( $atts ) {
+function wpma_shortcode( $atts ) {
 	global $current_user;
 	$atts = shortcode_atts( array(
 		'userId' => $current_user->ID,
 		'size' => 150,
 		'alt' => 'User Avatar'
-	), $atts, 'my_avatar' );
+	), $atts, 'wpma' );
 
-	return my_avatar_get_avatar($atts['userId'],$atts['size'],$atts['alt']);
+	return wpma_get_avatar($atts['userId'],$atts['size'],$atts['alt']);
 }
-add_shortcode( 'my_avatar', 'my_avatar_shortcode' );
+add_shortcode( 'wpma', 'wpma_shortcode' );
