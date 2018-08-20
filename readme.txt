@@ -1,7 +1,7 @@
 === WPMyAvatar ===
 Contributors: frametagmedia
 Tags: avatar, custom avatar, custom profile pic, customization, media library, personalization
-Requires at least: 4.5
+Requires at least: 3.5.0
 Tested up to: 4.9.7
 License: GNU GPL v2
 
