@@ -108,7 +108,7 @@ function wpma_profile_fields( $user_id ) {
 	if ( !current_user_can( 'edit_user', $user_id ) || empty($_POST['wpma_url']))
 		return false;
 
-	update_usermeta( $user_id, 'wpma_url', esc_url($_POST['wpma_url']) );
+	update_user_meta( $user_id, 'wpma_url', esc_url($_POST['wpma_url']) );
 }
 
 
