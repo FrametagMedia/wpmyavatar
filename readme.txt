@@ -15,7 +15,7 @@ Shortcode to show a user avatar anywhere on your site - [my_avatar userId=\'1\' 
 * please note users must be an author or higher to upload a custom avatar/profile picture
 
 == Installation ==
-Install from WordPress plugin gallery or download the zip from https://frametagmedia.com.au/digital-creative/wordpress-plugins/wpmyavatar/ and install manually via the plugin upload in WordPress.
+Install from WordPress plugin gallery or download the zip from https://frametagmedia.com.au/pluginpages/wpmyavatar/ and install manually via the plugin upload in WordPress.
 
 == Frequently Asked Questions ==
 email developers@frametagmedia.com.au for more information
