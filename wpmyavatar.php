@@ -16,10 +16,10 @@ function wpma_admin_print_styles() {
 	wp_enqueue_style('my-avatar', plugins_url('css/my-avatar.css', __FILE__), 'css');
 }
 
-function load_wp_media_files() {
+function wpma_load_wp_media_files() {
   wp_enqueue_media();
 }
-add_action( 'admin_enqueue_scripts', 'load_wp_media_files' );
+add_action( 'admin_enqueue_scripts', 'wpma_load_wp_media_files' );
 
 add_action('show_user_profile', 'wpma_form');
 add_action('edit_user_profile', 'wpma_form');
@@ -108,7 +108,7 @@ function wpma_profile_fields( $user_id ) {
 	if ( !current_user_can( 'edit_user', $user_id ) || empty($_POST['wpma_url']))
 		return false;
 
-	update_usermeta( $user_id, 'wpma_url', $_POST['wpma_url'] );
+	update_usermeta( $user_id, 'wpma_url', esc_url($_POST['wpma_url']) );
 }
 
 
